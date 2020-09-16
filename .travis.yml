@@ -1,0 +1,20 @@
+sudo: required
+services: 
+    - docker
+
+before_install:
+    - docker build -t fiegam/docker-react -f Dockerfile.dev .
+
+script:
+    - docker run -e CI=true fiegam/docker-react npm run test 
+
+deploy:
+    provider: elasticbeanstalk
+    region: "us-west-2"
+    app: "name of the application in aws"
+    env: "environment from aws"
+    bucket_name: "s3 bucket name from aws"
+    bucket_path: "name of the application in aws"
+    on:
+        branch: master
+

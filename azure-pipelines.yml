@@ -27,3 +27,9 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'Free Trial (d0a884f6-ea9b-4c9b-9e8f-8974e6263d0b)'
+        scriptType: 'ps'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az container create --resource-group testRG --name multi-docker --image fiegam/simpleweb --dns-name-label multi-docker --ports 80'
